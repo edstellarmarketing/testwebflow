@@ -1,0 +1,140 @@
+EDSTELLAR COURSE CONTENT TEMPLATE
+===================================
+Instructions:
+1. Copy this entire template into a new Google Doc
+2. Replace all [placeholder text] with actual content
+3. Keep the "## Section Name" headers exactly as they are
+4. Use Heading 2 style in Google Docs for each ## section
+5. Share the doc (Anyone with the link → Viewer)
+6. Paste the URL in the Webflow CMS Pusher app
+
+---
+
+## Course Name
+[Full course name, e.g., "Retrieval Augmented Generation (RAG) Training"]
+
+## Meta Title
+[SEO title, min 70 chars, format: "Course Name | Corporate Training | Edstellar"]
+
+## Meta Description
+[SEO description, min 155 chars, compelling summary for search results]
+
+## Canonical Link
+[Full URL: https://www.edstellar.com/course/your-course-slug]
+
+## Primary Keyword
+[Main SEO keyword, e.g., "RAG Training"]
+
+## Keyword Search Volume
+[Monthly search volume number, e.g., 1200]
+
+## Main Heading
+[H1 heading for the page, usually same as Course Name]
+
+## Dynamic Course Name
+[H2 and Para with Corporate Word — Course Name without "Training" and "Course" word]
+
+## Delivery Type
+[Choose: Instructor-Led / Self-Paced / Blended]
+
+## Duration
+[e.g., 16 Hours / 2 Days / 24 Hours]
+
+## Course Description
+[Write 2-3 paragraphs describing what the course covers, why it matters, and what teams will gain. This is the main description visible on the course page.]
+
+## Skill Data Header
+[Section heading, format: "Skills Covered in [Course Topic] Training"]
+
+## Skill Data Paragraph
+[1-2 sentences summarizing the key skills participants will develop]
+
+## Skill Data Pointers
+- [Skill 1]
+- [Skill 2]
+- [Skill 3]
+- [Skill 4]
+- [Skill 5]
+- [Skill 6]
+
+## Courses Card Pointers
+- [Key selling point 1 — shown on course cards]
+- [Key selling point 2]
+- [Key selling point 3]
+
+## Key Highlights
+- [Highlight 1, e.g., "Hands-on labs with real-world datasets"]
+- [Highlight 2, e.g., "Industry-certified trainers"]
+- [Highlight 3, e.g., "Customized curriculum for your team"]
+- [Highlight 4, e.g., "Post-training support and resources"]
+
+## Target Audience
+[Write a paragraph describing the ideal participants — job roles, experience level, industries]
+
+## Target Audience Points
+- [Audience 1, e.g., "AI/ML Engineers building intelligent applications"]
+- [Audience 2, e.g., "Data Scientists working with LLMs"]
+- [Audience 3, e.g., "Technical Leads overseeing AI initiatives"]
+- [Audience 4, e.g., "Product Managers driving AI-powered features"]
+
+## Pre-Requisites
+- [Prerequisite 1, e.g., "Basic Python programming"]
+- [Prerequisite 2, e.g., "Familiarity with machine learning concepts"]
+- [Prerequisite 3, e.g., "Understanding of NLP fundamentals"]
+
+## Learning Outcomes
+- [Outcome 1 — start with action verb, e.g., "Design and implement..."]
+- [Outcome 2, e.g., "Select and configure..."]
+- [Outcome 3, e.g., "Optimize..."]
+- [Outcome 4, e.g., "Deploy..."]
+- [Outcome 5, e.g., "Evaluate and monitor..."]
+
+## Overview
+[Write a detailed paragraph about the training approach, methodology, and what makes this program comprehensive. Mention hands-on exercises, case studies, or real-world applications.]
+
+## Course Outlines
+### Module 1: [Module Title]
+- [Topic 1]
+- [Topic 2]
+- [Topic 3]
+
+### Module 2: [Module Title]
+- [Topic 1]
+- [Topic 2]
+- [Topic 3]
+
+### Module 3: [Module Title]
+- [Topic 1]
+- [Topic 2]
+- [Topic 3]
+
+### Module 4: [Module Title]
+- [Topic 1]
+- [Topic 2]
+- [Topic 3]
+
+[Add more modules as needed]
+
+## Conclusion
+[Write a closing paragraph reinforcing the value of the training and how it benefits organizations]
+
+## Why Choose Edstellar
+Edstellar brings 14+ years of corporate training expertise with 5,000+ certified trainers across 100+ locations worldwide. Our customized training programs are trusted by Fortune 500 companies including Visa, ABB, and Aditya Birla Group. We offer end-to-end training solutions from needs analysis to post-training assessment.
+
+## What Sets Us Apart
+- Customized curriculum tailored to your team's tech stack and goals
+- 5,000+ certified trainers with deep industry experience
+- Flexible delivery: virtual instructor-led, onsite, or hybrid
+- Post-training support, assessments, and certification
+- Proven track record with Fortune 500 clients globally
+
+## Drive Team Excellence Heading
+[Format: "Drive Team Excellence with [Course Topic] Training"]
+
+## Testimonials Heading and Paragraph
+[Format: "What Our Clients Say About Edstellar's [Training Category] Programs"]
+
+## Internal Links for Courses
+- <a href="/course/[related-course-1-slug]">[Related Course 1 Name]</a>
+- <a href="/course/[related-course-2-slug]">[Related Course 2 Name]</a>
+- <a href="/course/[related-course-3-slug]">[Related Course 3 Name]</a>
