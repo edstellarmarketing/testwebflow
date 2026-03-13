@@ -329,6 +329,25 @@ def map_to_webflow_fields(sections: dict) -> dict:
             # If it can't be converted, remove it to avoid validation error
             del field_data["keyword-search-volume"]
 
+    # ─── MAIN HEADING: Format as embed code ────────────────────────────
+    # Webflow expects: <h1 class='ch1'><span class='text-color-yellow'>Topic</span> Corporate Training Program for Employees</h1>
+    # We extract the topic from the course name by removing "Training" suffix
+    if "main-heading" in field_data:
+        raw_heading = field_data["main-heading"]
+        # Strip any existing HTML tags to get clean text
+        clean_heading = re.sub(r'<[^>]+>', '', raw_heading).strip()
+
+        # Extract topic: remove "Training" from the end if present
+        topic = re.sub(r'\s+Training\s*$', '', clean_heading, flags=re.IGNORECASE).strip()
+
+        # Build the embed code format
+        field_data["main-heading"] = (
+            f"<h1 class='ch1'>"
+            f"<span class='text-color-yellow'>{topic}</span> "
+            f"Corporate Training Program for Employees"
+            f"</h1>"
+        )
+
     return field_data
 
 
