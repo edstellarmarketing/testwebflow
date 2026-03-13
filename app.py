@@ -48,13 +48,14 @@ FIELD_MAP = {
     # SEO / Meta
     "Meta Title": "meta-title",
     "Meta Description": "meta-description",
-    "Canonical Link": "canonical-link",
+    "Canonical Link": "canonical-link-2",
     "Primary Keyword": "primary-keyword",
     "Keyword Search Volume": "keyword-search-volume",
 
     # Core Content
     "Main Heading": "main-heading",
-    "Dynamic Course Name": "dynamic-course-name",
+    "Dynamic Course Name": "h2-and-para-with-corporate-word",
+    "Course Name Field": "course-name",
     "Course Description": "course-description",
     "Delivery Type": "delivery-type",
     "Duration": "duration",
@@ -76,8 +77,8 @@ FIELD_MAP = {
 
     # Marketing
     "Conclusion": "conclusion",
-    "Why Choose Edstellar": "why-choose-edstellar",
-    "What Sets Us Apart": "what-sets-us-apart",
+    "Why Choose Edstellar": "why-choose-edstellar-2",
+    "What Sets Us Apart": "what-sets-us-apart-2",
     "Drive Team Excellence Heading": "drive-team-excellence-heading",
     "Testimonials Heading and Paragraph": "testimonials-heading-and-paragraph",
 
@@ -85,9 +86,11 @@ FIELD_MAP = {
     "Internal Links for Courses": "internal-links-for-courses",
 }
 
-# Fields that should be treated as Rich Text (HTML)
+# Fields that are RichText in Webflow (will be converted to HTML)
+# Based on actual schema: fields marked as (RichText) get HTML conversion
+# Fields marked as (PlainText) should NOT get HTML wrapping
 RICH_TEXT_FIELDS = {
-    "course-description",
+    "main-heading",
     "skill-data-pointers",
     "courses-card-pointers",
     "key-highlights",
@@ -97,9 +100,8 @@ RICH_TEXT_FIELDS = {
     "learning-outcomes",
     "overview",
     "course-outlines-rich-text",
-    "conclusion",
-    "why-choose-edstellar",
-    "what-sets-us-apart",
+    "why-choose-edstellar-2",
+    "what-sets-us-apart-2",
     "drive-team-excellence-heading",
     "testimonials-heading-and-paragraph",
     "internal-links-for-courses",
@@ -303,14 +305,29 @@ def map_to_webflow_fields(sections: dict) -> dict:
     # Fallback: if 'name' not found, try to derive from Main Heading or Meta Title
     if "name" not in field_data:
         if "main-heading" in field_data:
-            field_data["name"] = field_data["main-heading"]
+            # main-heading is RichText, strip any HTML for the name
+            raw = re.sub(r'<[^>]+>', '', field_data["main-heading"])
+            field_data["name"] = raw.strip()
         elif "meta-title" in field_data:
-            # Extract course name from meta title (before first |)
             field_data["name"] = field_data["meta-title"].split("|")[0].strip()
+
+    # Auto-populate 'course-name' field from 'name' if not set
+    if "name" in field_data and "course-name" not in field_data:
+        field_data["course-name"] = field_data["name"]
 
     # Auto-generate slug from name if not provided
     if "name" in field_data and "slug" not in field_data:
         field_data["slug"] = slugify(field_data["name"])
+
+    # Convert keyword-search-volume to number (Webflow expects Number type)
+    if "keyword-search-volume" in field_data:
+        try:
+            field_data["keyword-search-volume"] = int(
+                field_data["keyword-search-volume"].strip().replace(",", "")
+            )
+        except (ValueError, AttributeError):
+            # If it can't be converted, remove it to avoid validation error
+            del field_data["keyword-search-volume"]
 
     return field_data
 
