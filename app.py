@@ -217,26 +217,61 @@ def fetch_public_doc_as_text(doc_id: str) -> str | None:
 def parse_structured_content(text: str) -> dict:
     """
     Parse structured content from a Google Doc or pasted text.
-    Expected format:
+    Supports TWO formats:
+
+    Format 1 (Markdown — from manual paste or service account):
         ## Section Name
         Content goes here...
 
-        ## Another Section
-        More content...
+    Format 2 (Plain text — from Google Docs public export):
+        Course Name
+        Creating Websites with Framer Training
+
+        Meta Title
+        Creating Websites with Framer Training | Corporate Training | Edstellar
+
+    The parser auto-detects the format by checking if ## markers exist.
     """
+    # Known section headers (case-insensitive) for plain-text matching
+    KNOWN_HEADERS = {h.lower() for h in FIELD_MAP.keys()}
+
+    # Check if the text uses ## markdown headers
+    has_markdown_headers = bool(re.search(r'^#{2}\s+.+', text, re.MULTILINE))
+
     sections = {}
     current_section = None
     current_content = []
 
+    # Clean BOM and leading whitespace
+    text = text.lstrip("\ufeff").strip()
+
     for line in text.split("\n"):
         stripped = line.strip()
-        # Match section headers: ## Section Name or ### Section Name
-        header_match = re.match(r'^#{2}\s+(.+)$', stripped)
-        if header_match:
+
+        is_header = False
+
+        if has_markdown_headers:
+            # Format 1: Match ## Section Name
+            header_match = re.match(r'^#{2}\s+(.+)$', stripped)
+            if header_match:
+                is_header = True
+                header_name = header_match.group(1).strip()
+        else:
+            # Format 2: Match known section names as standalone lines
+            if stripped.lower() in KNOWN_HEADERS:
+                is_header = True
+                # Find the canonical (properly-cased) header name
+                header_name = stripped
+                for key in FIELD_MAP.keys():
+                    if key.lower() == stripped.lower():
+                        header_name = key
+                        break
+
+        if is_header:
             # Save previous section
             if current_section:
                 sections[current_section] = "\n".join(current_content).strip()
-            current_section = header_match.group(1).strip()
+            current_section = header_name
             current_content = []
         else:
             if current_section:
@@ -264,6 +299,14 @@ def map_to_webflow_fields(sections: dict) -> dict:
                 if key.lower() == section_name.lower():
                     field_data[slug] = content
                     break
+
+    # Fallback: if 'name' not found, try to derive from Main Heading or Meta Title
+    if "name" not in field_data:
+        if "main-heading" in field_data:
+            field_data["name"] = field_data["main-heading"]
+        elif "meta-title" in field_data:
+            # Extract course name from meta title (before first |)
+            field_data["name"] = field_data["meta-title"].split("|")[0].strip()
 
     # Auto-generate slug from name if not provided
     if "name" in field_data and "slug" not in field_data:
