@@ -348,14 +348,35 @@ def map_to_webflow_fields(sections: dict) -> dict:
             f"</h1>"
         )
 
+    # ─── COURSE DESCRIPTION: PlainText, hard limit 300 chars ─────────
+    if "course-description" in field_data:
+        desc = field_data["course-description"].strip()
+        desc = re.sub(r'<[^>]+>', '', desc)
+        desc = re.sub(r'\s+', ' ', desc).strip()
+        field_data["course-description"] = desc[:300]
+
     return field_data
 
 
+# Fields that use embed code format (list items need style="list-style-type:disc")
+EMBED_CODE_FIELDS = {
+    "key-highlights",
+    "skill-data-pointers",
+    "courses-card-pointers",
+    "target-audience-points",
+    "pre-requisites",
+    "learning-outcomes",
+    "what-sets-us-apart-2",
+    "internal-links-for-courses",
+}
+
+
 def convert_plain_to_html(text: str, field_slug: str) -> str:
-    """Convert plain text with bullet points to basic HTML for rich text fields."""
+    """Convert plain text with bullet points to HTML for rich text / embed fields."""
     if field_slug not in RICH_TEXT_FIELDS:
         return text
 
+    is_embed = field_slug in EMBED_CODE_FIELDS
     lines = text.split("\n")
     html_parts = []
     in_list = False
@@ -374,7 +395,11 @@ def convert_plain_to_html(text: str, field_slug: str) -> str:
             if not in_list:
                 html_parts.append("<ul>")
                 in_list = True
-            html_parts.append(f"  <li>{bullet_match.group(1)}</li>")
+            item_text = bullet_match.group(1)
+            if is_embed:
+                html_parts.append(f'\t<li style="list-style-type:disc">{item_text}</li>')
+            else:
+                html_parts.append(f"  <li>{item_text}</li>")
         else:
             if in_list:
                 html_parts.append("</ul>")
