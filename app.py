@@ -816,7 +816,8 @@ with tab3:
         with col1:
             st.markdown("**✅ Mapped Fields**")
             for slug, value in field_data.items():
-                preview = value[:120] + "..." if len(value) > 120 else value
+                display_val = str(value)
+                preview = display_val[:120] + "..." if len(display_val) > 120 else display_val
                 is_html = slug in RICH_TEXT_FIELDS
                 tag = " 🔤HTML" if is_html else ""
                 st.markdown(f"**`{slug}`**{tag}: {preview}")
